@@ -16,11 +16,6 @@ func main() {
 					Team:     "Team A",
 					Points:   45,
 				},
-				{
-					Position: "2",
-					Team:     "Team B",
-					Points:   43,
-				},
 			},
 		})
 	})
