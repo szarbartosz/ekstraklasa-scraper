@@ -2,6 +2,12 @@
 
 ![average enjoyer](/assets/58q6lo.png)
 
+# Quickstart
+
+```bash
+$ air
+```
+
 # Checklist
 
 - [ ] scrap scoreboard
