@@ -1,7 +1,8 @@
 package main
 
 import (
-	"scrapper/ekstraklasa/models"
+	"scraper/ekstraklasa/models"
+	"scraper/ekstraklasa/scraper"
 
 	"github.com/gin-gonic/gin"
 )
@@ -9,6 +10,8 @@ import (
 func main() {
 	r := gin.Default()
 	r.GET("/table", func(c *gin.Context) {
+		scraper.Scrape()
+
 		c.JSON(200, gin.H{
 			"standings": []models.Standing{
 				{
