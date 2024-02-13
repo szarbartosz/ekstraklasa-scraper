@@ -13,3 +13,5 @@ $ air
 - [ ] scrap scoreboard
 - [ ] scrap best ekstraklasa team stats (Puszcza Niepołomice :evergreen_tree:)
 - [ ] scrap upcoming matches schedule
+
+![lewandowski-meme](/assets/8fpebz.jpg)
