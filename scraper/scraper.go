@@ -1,49 +1,63 @@
 package scraper
 
 import (
-	"fmt"
 	"log"
 	"os"
+	"strconv"
+
+	"scraper/ekstraklasa/models"
 
 	"github.com/gocolly/colly"
 	"github.com/joho/godotenv"
 )
 
-func Scrape() {
+func Scrape() []models.Standing {
 	collector := colly.NewCollector()
+	var err error
+	var standings []models.Standing
+	headerSkipped := false
 
 	collector.OnHTML("tr", func(tr *colly.HTMLElement) {
-		tr.ForEach("td", func(i int, td *colly.HTMLElement) {
-			switch i {
-			case 1:
-				fmt.Println("Team position:", td.Text)
-			case 3:
-				fmt.Println("Team name:", td.ChildText("a.hidden"))
-			case 4:
-				// TODO Handle these nice svgs
-			case 5:
-				fmt.Println("Games played:", td.Text)
-			case 6:
-				fmt.Println("Wins:", td.Text)
-			case 7:
-				fmt.Println("Draws:", td.Text)
-			case 8:
-				fmt.Println("Losses:", td.Text)
-			case 9:
-				fmt.Println("Goals for:", td.Text)
-			case 10:
-				fmt.Println("Goals against:", td.Text)
-			case 11:
-				fmt.Println("Goals difference:", td.Text)
-			case 12:
-				fmt.Println("Team points:", td.Text)
-			}
+		standing := models.Standing{}
 
-		})
-		fmt.Println("\n")
+		if headerSkipped {
+			tr.ForEach("td", func(i int, td *colly.HTMLElement) {
+				switch i {
+				case 1:
+					standing.Position, err = strconv.Atoi(td.Text)
+				case 3:
+					standing.TeamName = td.ChildText("a.hidden")
+				case 4:
+					// TODO Handle these nice svgs
+				case 5:
+					standing.GamesPlayed, err = strconv.Atoi(td.Text)
+				case 6:
+					standing.Wins, err = strconv.Atoi(td.Text)
+				case 7:
+					standing.Draws, err = strconv.Atoi(td.Text)
+				case 8:
+					standing.Losses, err = strconv.Atoi(td.Text)
+				case 9:
+					standing.GoalsFor, err = strconv.Atoi(td.Text)
+				case 10:
+					standing.GoalsAgainst, err = strconv.Atoi(td.Text)
+				case 11:
+					standing.GoalsDifference, err = strconv.Atoi(td.Text)
+				case 12:
+					standing.TeamPoints, err = strconv.Atoi(td.Text)
+				}
+			})
+			if err != nil {
+				log.Fatal("Error while parsing standing: ", err)
+			} else {
+				standings = append(standings, standing)
+			}
+		} else {
+			headerSkipped = true
+		}
 	})
 
-	err := godotenv.Load()
+	err = godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
@@ -51,4 +65,6 @@ func Scrape() {
 	scrapeUrl := os.Getenv("EKSTRAKLASA_URL")
 
 	collector.Visit(scrapeUrl)
+
+	return standings
 }

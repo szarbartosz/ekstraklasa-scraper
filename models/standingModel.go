@@ -1,7 +1,14 @@
 package models
 
 type Standing struct {
-	Position string
-	Team     string
-	Points   int
+	Position        int
+	TeamName        string
+	GamesPlayed     int
+	Wins            int
+	Draws           int
+	Losses          int
+	GoalsFor        int
+	GoalsAgainst    int
+	GoalsDifference int
+	TeamPoints      int
 }
