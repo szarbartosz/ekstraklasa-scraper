@@ -10,29 +10,37 @@ import (
 )
 
 func Scrape() {
-	c := colly.NewCollector()
+	collector := colly.NewCollector()
 
-	c.OnHTML("tr", func(e *colly.HTMLElement) {
-		e.ForEach("td", func(i int, el *colly.HTMLElement) {
-			testID := el.Attr("data-testid")
-			fmt.Println(testID)
-			if testID == "atom-table-cell-last-results" {
-				el.ForEach("svg", func(i int, el *colly.HTMLElement) {
-					fmt.Println(el.Attr("class"))
-				})
-			} else if testID == "table-cell-team" {
-				el.ForEach("a", func(i int, el *colly.HTMLElement) {
-					fmt.Println(el.Text)
-				})
-			} else if testID == "table-cell-icon" {
-				fmt.Println(el)
-				el.ForEach("source", func(i int, el *colly.HTMLElement) {
-					fmt.Println(el.Attr("srcset"))
-				})
+	collector.OnHTML("tr", func(tr *colly.HTMLElement) {
+		tr.ForEach("td", func(i int, td *colly.HTMLElement) {
+			switch i {
+			case 1:
+				fmt.Println("Team position:", td.Text)
+			case 3:
+				fmt.Println("Team name:", td.ChildText("a.hidden"))
+			case 4:
+				// TODO Handle these nice svgs
+			case 5:
+				fmt.Println("Games played:", td.Text)
+			case 6:
+				fmt.Println("Wins:", td.Text)
+			case 7:
+				fmt.Println("Draws:", td.Text)
+			case 8:
+				fmt.Println("Losses:", td.Text)
+			case 9:
+				fmt.Println("Goals for:", td.Text)
+			case 10:
+				fmt.Println("Goals against:", td.Text)
+			case 11:
+				fmt.Println("Goals difference:", td.Text)
+			case 12:
+				fmt.Println("Team points:", td.Text)
 			}
-		})
 
-		fmt.Println(e.Attr("table-cell-team"))
+		})
+		fmt.Println("\n")
 	})
 
 	err := godotenv.Load()
@@ -42,5 +50,5 @@ func Scrape() {
 
 	scrapeUrl := os.Getenv("EKSTRAKLASA_URL")
 
-	c.Visit(scrapeUrl)
+	collector.Visit(scrapeUrl)
 }
