@@ -12,6 +12,13 @@ import (
 )
 
 func Scrape() []models.Standing {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
+	scrapeUrl := os.Getenv("EKSTRAKLASA_URL")
+
 	collector := colly.NewCollector()
 	headerSkipped := false
 
@@ -52,13 +59,6 @@ func Scrape() []models.Standing {
 			headerSkipped = true
 		}
 	})
-
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
-
-	scrapeUrl := os.Getenv("EKSTRAKLASA_URL")
 
 	collector.Visit(scrapeUrl)
 
