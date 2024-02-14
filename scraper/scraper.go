@@ -14,7 +14,7 @@ import (
 func Scrape() []models.Standing {
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		log.Fatal("Error loading .env file - ignore this if running on docker tho.")
 	}
 
 	scrapeUrl := os.Getenv("EKSTRAKLASA_URL")

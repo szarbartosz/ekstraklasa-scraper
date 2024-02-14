@@ -1,0 +1,14 @@
+version: "3.8"
+
+services:
+  ekstraklasa-scraper:
+    image: ghcr.io/szarbartosz/ekstraklasa-scraper:latest
+    container_name: scraper
+    restart: unless-stopped
+    environment:
+      PORT: ${PORT}
+      EKSTRAKLASA_URL: ${EKSTRAKLASA_URL}
+    ports:
+      - 8080:8080
+    env_file:
+      - .env
