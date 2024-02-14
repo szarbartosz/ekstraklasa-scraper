@@ -3,7 +3,7 @@
 ## Quickstart
 
 ```bash
-# spin off docker container
+# launch docker container
 ./pull_and_compose.sh
 ```
 
