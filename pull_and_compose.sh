@@ -18,7 +18,7 @@ echo '
 
 echo 'setting up environment variables...'
 echo 'PORT=8080' > .env
-echo 'EKSTRAKLASA_URL=https://eurosport.tvn24.pl/pilka-nozna/pko-bp-ekstraklasa/2023-2024/tabela.shtml' >> .env
+echo 'SCRAPE_URL=https://eurosport.tvn24.pl/pilka-nozna/pko-bp-ekstraklasa/2023-2024/tabela.shtml' >> .env
 
 echo 'pulling and starting docker container...'
 docker compose pull
