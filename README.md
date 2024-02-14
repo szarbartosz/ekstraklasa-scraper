@@ -3,13 +3,15 @@
 ## Quickstart
 
 ```bash
+# spin off docker container
 ./pull_and_compose.sh
 ```
 
 ## Dev quickstart
 
 ```bash
-$ air
+# launch live-reloaded dev version locally
+air
 ```
 
 ## Checklist
@@ -17,6 +19,28 @@ $ air
 - [x] scrap scoreboard
 - [ ] scrap best ekstraklasa team stats (Puszcza Niepołomice :evergreen_tree:)
 - [ ] scrap upcoming matches schedule
+
+## Endpoints
+
+```http
+GET /table
+```
+
+```go
+// returns scraped ekstraklasa table, in which each entry is of type Standing
+type Standing struct {
+	Position        int
+	TeamName        string
+	GamesPlayed     int
+	Wins            int
+	Draws           int
+	Losses          int
+	GoalsFor        int
+	GoalsAgainst    int
+	GoalsDifference int
+	TeamPoints      int
+}
+```
 
 ## Motivation
 
