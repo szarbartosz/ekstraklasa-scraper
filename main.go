@@ -1,10 +1,15 @@
 package main
 
 import (
+	"scraper/ekstraklasa/initializers"
 	"scraper/ekstraklasa/scraper"
 
 	"github.com/gin-gonic/gin"
 )
+
+func init() {
+	initializers.LoadEnvVariables()
+}
 
 func main() {
 	r := gin.Default()

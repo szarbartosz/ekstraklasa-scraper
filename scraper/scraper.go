@@ -8,16 +8,14 @@ import (
 	"scraper/ekstraklasa/models"
 
 	"github.com/gocolly/colly"
-	"github.com/joho/godotenv"
 )
 
 func Scrape() []models.Standing {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file - ignore this if running on docker tho.")
-	}
-
 	scrapeUrl := os.Getenv("EKSTRAKLASA_URL")
+
+	if scrapeUrl == "" {
+		log.Panic("No EKSTRAKLASA_URL env variable found!")
+	}
 
 	collector := colly.NewCollector()
 	headerSkipped := false
