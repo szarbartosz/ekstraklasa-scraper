@@ -3,6 +3,7 @@ package scrapers
 import (
 	"log"
 	"os"
+	"strings"
 
 	"scraper/ekstraklasa/models"
 	"scraper/ekstraklasa/utils"
@@ -33,8 +34,16 @@ func ScrapeTable(c *gin.Context) {
 					standing.Position = utils.ParseToInt(td.Text)
 				case 3:
 					standing.TeamName = td.ChildText("a.hidden")
+					standing.LogoUrl = td.ChildAttr("source", "srcset")
 				case 4:
-					// TODO Handle these nice svgs
+					var lastResults []models.MatchResult
+
+					td.ForEach("svg", func(i int, svg *colly.HTMLElement) {
+						lastResults = append(lastResults, ResolveMatchResult(svg))
+
+					})
+
+					standing.LastResults = lastResults
 				case 5:
 					standing.GamesPlayed = utils.ParseToInt(td.Text)
 				case 6:
@@ -64,4 +73,14 @@ func ScrapeTable(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"standings": standings,
 	})
+}
+
+func ResolveMatchResult(svg *colly.HTMLElement) models.MatchResult {
+	if strings.Contains(svg.Attr("data-testid"), "lost") {
+		return models.Lost
+	} else if strings.Contains(svg.Attr("data-testid"), "draw") {
+		return models.Draw
+	} else {
+		return models.Won
+	}
 }
