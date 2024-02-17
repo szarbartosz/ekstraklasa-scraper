@@ -1,4 +1,4 @@
-package scrapers
+package eurosport
 
 import (
 	"log"
@@ -13,10 +13,10 @@ import (
 )
 
 func ScrapeTable(c *gin.Context) {
-	scrapeUrl := os.Getenv("SCRAPE_URL")
+	scrapeUrl := os.Getenv("EUROSPORT_URL")
 
 	if scrapeUrl == "" {
-		log.Panic("No SCRAPE_URL env variable found!")
+		log.Panic("No EUROSPORT_URL env variable found!")
 	}
 
 	collector := colly.NewCollector()
