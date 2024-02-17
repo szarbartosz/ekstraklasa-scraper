@@ -18,7 +18,6 @@ FROM alpine:3
 WORKDIR /
 COPY --from=builder /binary /main
 
-ENV GIN_MODE release
 EXPOSE 8080
 
 ENTRYPOINT ["/main"]

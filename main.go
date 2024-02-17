@@ -1,6 +1,7 @@
 package main
 
 import (
+	"os"
 	"scraper/ekstraklasa/initializers"
 	"scraper/ekstraklasa/scrapers"
 
@@ -9,12 +10,13 @@ import (
 
 func init() {
 	initializers.LoadEnvVariables()
+	gin.SetMode(os.Getenv("GIN_MODE"))
 }
 
 func main() {
-	r := gin.Default()
+	router := gin.Default()
 
-	r.GET("/table", scrapers.ScrapeTable)
+	router.GET("/table", scrapers.ScrapeTable)
 
-	r.Run()
+	router.Run()
 }

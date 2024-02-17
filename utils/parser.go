@@ -12,7 +12,7 @@ func ParseToInt(toBeParsed string) int {
 	parsed, err = strconv.Atoi(toBeParsed)
 
 	if err != nil {
-		log.Fatal("Error while parsing to int: ", err)
+		log.Panic("Error while parsing to int: ", err)
 	}
 
 	return parsed
