@@ -7,7 +7,7 @@ services:
     restart: unless-stopped
     environment:
       PORT: ${PORT}
-      SCRAPE_URL: ${SCRAPE_URL}
+      SCRAPE_URL: ${EKSTRAKLASA_URL}
     ports:
       - 8080:8080
     env_file:
