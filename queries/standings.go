@@ -14,11 +14,15 @@ import (
 func QueryStandings(queryParams map[string][]string) []models.Standing {
 	activeScraper := os.Getenv("ACTIVE_SCRAPER")
 
+	if activeScraper == "" {
+		log.Panic("No ACTIVE_SCRAPER env variable not found!")
+	}
+
 	urlEnvName := activeScraper + "_URL"
 	scrapeUrl := os.Getenv(urlEnvName)
 
 	if scrapeUrl == "" {
-		message := fmt.Sprintf("No %s env variable found!", urlEnvName)
+		message := fmt.Sprintf("No %s env variable not found!", urlEnvName)
 		log.Panic(message)
 	}
 
@@ -30,8 +34,6 @@ func QueryStandings(queryParams map[string][]string) []models.Standing {
 	case "EUROSPORT":
 		standings = eurosport.ScrapeTable(scrapeUrl)
 	default:
-		message := fmt.Sprintf("No %s env variable found!", activeScraper)
-		log.Panic(message)
 		standings = []models.Standing{}
 	}
 
