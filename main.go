@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 	"scraper/ekstraklasa/initializers"
-	"scraper/ekstraklasa/scrapers/ekstraklasa"
+	"scraper/ekstraklasa/queries"
 
 	"github.com/gin-gonic/gin"
 )
@@ -16,7 +16,7 @@ func init() {
 func main() {
 	router := gin.Default()
 
-	router.GET("/table", ekstraklasa.ScrapeTable)
+	router.GET("/table", queries.GetTable)
 
 	router.Run()
 }

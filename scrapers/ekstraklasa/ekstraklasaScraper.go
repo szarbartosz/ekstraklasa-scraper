@@ -1,25 +1,16 @@
 package ekstraklasa
 
 import (
-	"log"
-	"os"
 	"strings"
 
 	"scraper/ekstraklasa/models"
 	"scraper/ekstraklasa/utils"
 
 	"github.com/PuerkitoBio/goquery"
-	"github.com/gin-gonic/gin"
 	"github.com/gocolly/colly"
 )
 
-func ScrapeTable(c *gin.Context) {
-	scrapeUrl := os.Getenv("EKSTRAKLASA_URL")
-
-	if scrapeUrl == "" {
-		log.Panic("No EKSTRAKLASA_URL env variable found!")
-	}
-
+func ScrapeTable(scrapeUrl string) []models.Standing {
 	collector := colly.NewCollector()
 
 	var standings []models.Standing
@@ -76,9 +67,7 @@ func ScrapeTable(c *gin.Context) {
 
 	collector.Visit(scrapeUrl)
 
-	c.JSON(200, gin.H{
-		"standings": standings,
-	})
+	return standings
 }
 
 func ResolveMatchResult(div *goquery.Selection) models.MatchResult {
