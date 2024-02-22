@@ -2,8 +2,8 @@ package main
 
 import (
 	"os"
+	"scraper/ekstraklasa/controllers"
 	"scraper/ekstraklasa/initializers"
-	"scraper/ekstraklasa/queries"
 
 	"github.com/gin-gonic/gin"
 )
@@ -16,7 +16,7 @@ func init() {
 func main() {
 	router := gin.Default()
 
-	router.GET("/table", queries.GetTable)
+	router.GET("/table", controllers.GetTable)
 
 	router.Run()
 }

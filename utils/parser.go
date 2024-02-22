@@ -3,6 +3,7 @@ package utils
 import (
 	"log"
 	"strconv"
+	"strings"
 )
 
 func ParseToInt(toBeParsed string) int {
@@ -16,4 +17,12 @@ func ParseToInt(toBeParsed string) int {
 	}
 
 	return parsed
+}
+
+func SanitizeString(input string) string {
+	words := strings.Fields(input)
+	noWhitespace := strings.Join(words, "")
+	lowercase := strings.ToLower(noWhitespace)
+
+	return lowercase
 }
