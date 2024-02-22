@@ -1,24 +1,15 @@
 package eurosport
 
 import (
-	"log"
-	"os"
 	"strings"
 
 	"scraper/ekstraklasa/models"
 	"scraper/ekstraklasa/utils"
 
-	"github.com/gin-gonic/gin"
 	"github.com/gocolly/colly"
 )
 
-func ScrapeTable(c *gin.Context) {
-	scrapeUrl := os.Getenv("EUROSPORT_URL")
-
-	if scrapeUrl == "" {
-		log.Panic("No EUROSPORT_URL env variable found!")
-	}
-
+func ScrapeTable(scrapeUrl string) []models.Standing {
 	collector := colly.NewCollector()
 	headerSkipped := false
 
@@ -70,9 +61,7 @@ func ScrapeTable(c *gin.Context) {
 
 	collector.Visit(scrapeUrl)
 
-	c.JSON(200, gin.H{
-		"standings": standings,
-	})
+	return standings
 }
 
 func ResolveMatchResult(svg *colly.HTMLElement) models.MatchResult {
