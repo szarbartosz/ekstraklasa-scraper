@@ -15,14 +15,14 @@ func QueryStandings(queryParams map[string][]string) []models.Standing {
 	activeScraper := os.Getenv("ACTIVE_SCRAPER")
 
 	if activeScraper == "" {
-		log.Panic("No ACTIVE_SCRAPER env variable not found!")
+		log.Panic("No ACTIVE_SCRAPER env variable found!")
 	}
 
 	urlEnvName := activeScraper + "_URL"
 	scrapeUrl := os.Getenv(urlEnvName)
 
 	if scrapeUrl == "" {
-		message := fmt.Sprintf("No %s env variable not found!", urlEnvName)
+		message := fmt.Sprintf("No %s env variable found!", urlEnvName)
 		log.Panic(message)
 	}
 
