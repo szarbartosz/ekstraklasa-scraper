@@ -12,7 +12,6 @@ import (
 )
 
 func QueryGames(queryParams map[string][]string) []models.Game {
-
 	scrapeUrl := os.Getenv("GOL_URL")
 
 	if scrapeUrl == "" {
