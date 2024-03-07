@@ -1,6 +1,7 @@
 package gol
 
 import (
+	"log"
 	"scraper/ekstraklasa/models"
 	"scraper/ekstraklasa/utils"
 	"strings"
@@ -41,9 +42,15 @@ func ScrapeTable(scrapeUrl string) []models.Game {
 				}
 			})
 
+			parsedDateTime, err := utils.ParseDateTime(time, currentDate)
+
+			if err != nil {
+				log.Panic("Error while parsing date and time: ", err)
+			}
+
 			game := models.Game{
 				Round:    currentRound,
-				DateTime: time + " " + currentDate,
+				DateTime: parsedDateTime,
 				Host:     host,
 				Guest:    guest,
 				Result:   result,
