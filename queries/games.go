@@ -7,6 +7,7 @@ import (
 	"scraper/ekstraklasa/scrapers/gol"
 	"scraper/ekstraklasa/utils"
 	"strings"
+	"time"
 )
 
 func QueryGames(queryParams map[string][]string) []models.Game {
@@ -20,6 +21,7 @@ func QueryGames(queryParams map[string][]string) []models.Game {
 	games = FilterByHost(games, queryParams)
 	games = FilterByGuest(games, queryParams)
 	games = FilterByRound(games, queryParams)
+	games = FilterUpcomingGames(games, queryParams)
 
 	return games
 }
@@ -77,6 +79,25 @@ func FilterByRound(games []models.Game, queryParams map[string][]string) []model
 	for _, game := range games {
 
 		if game.Round == round {
+			filteredGames = append(filteredGames, game)
+		}
+	}
+
+	return filteredGames
+}
+
+func FilterUpcomingGames(games []models.Game, queryParams map[string][]string) []models.Game {
+	roundParam := queryParams["upcoming"]
+
+	if len(roundParam) == 0 {
+		return games
+	}
+
+	oneWeek := time.Now().Add(7 * 24 * time.Hour)
+	var filteredGames []models.Game
+
+	for _, game := range games {
+		if game.DateTime.After(time.Now()) && game.DateTime.Before(oneWeek) {
 			filteredGames = append(filteredGames, game)
 		}
 	}
