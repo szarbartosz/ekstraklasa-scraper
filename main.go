@@ -17,6 +17,7 @@ func main() {
 	router := gin.Default()
 
 	router.GET("/table", controllers.GetTable)
+	router.GET("/games", controllers.GetGames)
 
 	router.Run()
 }
