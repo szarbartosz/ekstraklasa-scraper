@@ -19,6 +19,7 @@ func QueryGames(queryParams map[string][]string) []models.Game {
 	games := gol.ScrapeGames(scrapeUrl + "/terminarz")
 	games = FilterByHost(games, queryParams)
 	games = FilterByGuest(games, queryParams)
+	games = FilterByRound(games, queryParams)
 
 	return games
 }
@@ -56,6 +57,26 @@ func FilterByGuest(games []models.Game, queryParams map[string][]string) []model
 	for _, game := range games {
 
 		if strings.Contains(utils.SanitizeString(game.Guest), utils.SanitizeString(guestName)) {
+			filteredGames = append(filteredGames, game)
+		}
+	}
+
+	return filteredGames
+}
+
+func FilterByRound(games []models.Game, queryParams map[string][]string) []models.Game {
+	roundParam := queryParams["round"]
+
+	if len(roundParam) == 0 {
+		return games
+	}
+
+	round := utils.ParseToInt(roundParam[0])
+
+	var filteredGames []models.Game
+	for _, game := range games {
+
+		if game.Round == round {
 			filteredGames = append(filteredGames, game)
 		}
 	}
