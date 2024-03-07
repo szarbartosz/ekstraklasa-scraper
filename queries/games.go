@@ -6,11 +6,13 @@ import (
 	"scraper/ekstraklasa/models"
 	"scraper/ekstraklasa/scrapers/gol"
 	"scraper/ekstraklasa/utils"
+	"sort"
 	"strings"
 	"time"
 )
 
 func QueryGames(queryParams map[string][]string) []models.Game {
+
 	scrapeUrl := os.Getenv("GOL_URL")
 
 	if scrapeUrl == "" {
@@ -22,6 +24,8 @@ func QueryGames(queryParams map[string][]string) []models.Game {
 	games = FilterByGuest(games, queryParams)
 	games = FilterByRound(games, queryParams)
 	games = FilterUpcomingGames(games, queryParams)
+
+	sort.Sort(utils.GameSlice(games))
 
 	return games
 }
