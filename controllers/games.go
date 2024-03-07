@@ -6,10 +6,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func GetUpcomingGames(c *gin.Context) {
+func GetGames(c *gin.Context) {
 	queryParams := c.Request.URL.Query()
 
-	games := queries.QueryUpcomingGames(queryParams)
+	games := queries.QueryGames(queryParams)
 
 	c.JSON(200, gin.H{
 		"games": games,

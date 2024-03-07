@@ -9,7 +9,7 @@ import (
 	"github.com/gocolly/colly"
 )
 
-func ScrapeTable(scrapeUrl string) []models.Game {
+func ScrapeGames(scrapeUrl string) []models.Game {
 	collector := colly.NewCollector()
 
 	var games []models.Game
