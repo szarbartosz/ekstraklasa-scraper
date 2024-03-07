@@ -18,6 +18,7 @@ func QueryGames(queryParams map[string][]string) []models.Game {
 
 	games := gol.ScrapeGames(scrapeUrl + "/terminarz")
 	games = FilterByHost(games, queryParams)
+	games = FilterByGuest(games, queryParams)
 
 	return games
 }
@@ -35,6 +36,26 @@ func FilterByHost(games []models.Game, queryParams map[string][]string) []models
 	for _, game := range games {
 
 		if strings.Contains(utils.SanitizeString(game.Host), utils.SanitizeString(hostName)) {
+			filteredGames = append(filteredGames, game)
+		}
+	}
+
+	return filteredGames
+}
+
+func FilterByGuest(games []models.Game, queryParams map[string][]string) []models.Game {
+	guestNameParam := queryParams["guest"]
+
+	if len(guestNameParam) == 0 {
+		return games
+	}
+
+	guestName := guestNameParam[0]
+
+	var filteredGames []models.Game
+	for _, game := range games {
+
+		if strings.Contains(utils.SanitizeString(game.Guest), utils.SanitizeString(guestName)) {
 			filteredGames = append(filteredGames, game)
 		}
 	}
