@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   ekstraklasa-scraper:
     image: ghcr.io/szarbartosz/ekstraklasa-scraper:latest
