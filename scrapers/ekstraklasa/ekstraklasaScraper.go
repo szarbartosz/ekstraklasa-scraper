@@ -17,7 +17,7 @@ func ScrapeTable(scrapeUrl string) []models.Standing {
 
 	collector.OnHTML("app-league-standings-entry", func(tableRow *colly.HTMLElement) {
 		standing := models.Standing{}
-		var lastResults []models.MatchResult
+		lastResults := []models.MatchResult{}
 
 		tableRow.DOM.Find("div span").Each(func(i int, span *goquery.Selection) {
 			switch i {
