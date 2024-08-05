@@ -6,4 +6,5 @@ const (
 	Lost MatchResult = iota
 	Draw
 	Won
+	Unknown
 )
