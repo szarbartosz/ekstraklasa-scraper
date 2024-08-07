@@ -34,6 +34,16 @@ func ScrapeTable(scrapeUrl string) []models.Standing {
 
 					})
 
+					for i, j := 0, len(lastResults)-1; i < j; i, j = i+1, j-1 {
+						lastResults[i], lastResults[j] = lastResults[j], lastResults[i]
+					}
+
+					if len(lastResults) < 5 {
+						for i := len(lastResults); i < 5; i++ {
+							lastResults = append(lastResults, models.Unknown)
+						}
+					}
+
 					standing.LastResults = lastResults
 				case 5:
 					standing.GamesPlayed = utils.ParseToInt(td.Text)
