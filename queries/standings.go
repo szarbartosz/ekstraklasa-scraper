@@ -7,6 +7,7 @@ import (
 	"scraper/ekstraklasa/models"
 	"scraper/ekstraklasa/scrapers/ekstraklasa"
 	"scraper/ekstraklasa/scrapers/eurosport"
+	"scraper/ekstraklasa/scrapers/sport"
 	"scraper/ekstraklasa/utils"
 	"strings"
 )
@@ -33,6 +34,8 @@ func QueryStandings(queryParams map[string][]string) []models.Standing {
 		standings = ekstraklasa.ScrapeTable(scrapeUrl)
 	case "EUROSPORT":
 		standings = eurosport.ScrapeTable(scrapeUrl)
+	case "SPORT":
+		standings = sport.ScrapeTable(scrapeUrl)
 	default:
 		standings = []models.Standing{}
 	}
