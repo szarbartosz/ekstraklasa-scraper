@@ -27,7 +27,9 @@ func ParseToInt(toBeParsed string) int {
 	var parsed int
 	var err error
 
-	parsed, err = strconv.Atoi(toBeParsed)
+	sanitized := SanitizeString(toBeParsed)
+
+	parsed, err = strconv.Atoi(sanitized)
 
 	if err != nil {
 		log.Panic("Error while parsing to int: ", err)
