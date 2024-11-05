@@ -1,11 +1,15 @@
 services:
   ekstraklasa-scraper:
-    image: ghcr.io/szarbartosz/ekstraklasa-scraper:latest
+    build: .
     container_name: scraper
     restart: unless-stopped
     environment:
       PORT: ${PORT}
-      SCRAPE_URL: ${EKSTRAKLASA_URL}
+      GIN_MODE: ${GIN_MODE}
+      EKSTRAKLASA_URL: ${EKSTRAKLASA_URL}
+      EUROSPORT_URL: ${EUROSPORT_URL}
+      GOL_URL: ${GOL_URL}
+      ACTIVE_SCRAPER: ${ACTIVE_SCRAPER}
     ports:
       - 8080:8080
     env_file:
